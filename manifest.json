@@ -2,7 +2,7 @@
   "name": "role",
   "id": "1409994277655540900",
   "api": "1.0.0",
-  "main": "dist/code.js",
+  "main": "dist/index.js",
   "capabilities": [],
   "enableProposedApi": false,
   "documentAccess": "dynamic-page",
