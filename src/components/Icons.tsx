@@ -1,4 +1,44 @@
-// src/components/Icons.tsx
+const { widget } = figma;
+const { Frame, SVG, useSyncedState, AutoLayout } = widget;
+
+export const MinusIcon = ({ width = 24, height = 24, fill = "#636366" }) => (
+  <SVG
+    width={width}
+    height={height}
+    src={`
+      <svg width="${width}" height="${height}" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M5.75 13.4375C5.53333 13.4375 5.35417 13.3667 5.2125 13.225C5.07083 13.0833 5 12.9042 5 12.6875C5 12.4708 5.07083 12.2917 5.2125 12.15C5.35417 12.0083 5.53333 11.9375 5.75 11.9375H18.25C18.4667 11.9375 18.6458 12.0083 18.7875 12.15C18.9292 12.2917 19 12.4708 19 12.6875C19 12.9042 18.9292 13.0833 18.7875 13.225C18.6458 13.3667 18.4667 13.4375 18.25 13.4375H5.75Z" fill="${fill}"/>
+</svg>
+    `}
+  />
+);
+
+export const PlusIcon = ({ width = 24, height = 24, fill = "#636366" }) => (
+  <SVG
+    width={width}
+    height={height}
+    src={`<svg width="${width}" height="${height}" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M18.5 13.4375H13.5V18.4375C13.5 18.9875 13.05 19.4375 12.5 19.4375C11.95 19.4375 11.5 18.9875 11.5 18.4375V13.4375H6.5C5.95 13.4375 5.5 12.9875 5.5 12.4375C5.5 11.8875 5.95 11.4375 6.5 11.4375H11.5V6.4375C11.5 5.8875 11.95 5.4375 12.5 5.4375C13.05 5.4375 13.5 5.8875 13.5 6.4375V11.4375H18.5C19.05 11.4375 19.5 11.8875 19.5 12.4375C19.5 12.9875 19.05 13.4375 18.5 13.4375Z" fill="${fill}"/>
+</svg>
+`}
+  />
+);
+
+export function CircleIcon({ width = 24, height = 24, fill = '#DADADA' }: { width?: number; height?: number; fill?: string }) {
+  return `
+    <svg width="${width}" height="${height}" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="11.5" stroke="${fill}" />
+    </svg>
+  `;
+}
+
+export function RadioFillIcon({ width = 12, height = 12 }: { width?: number; height?: number }) {
+  return `
+    <svg width="${width}" height="${height}" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="6" cy="6" r="6" fill="black" />
+    </svg>
+  `;
+}
 
 export const defaultSVG = (headerColor: string) => `
 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">

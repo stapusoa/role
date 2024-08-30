@@ -1,7 +1,13 @@
 const { widget } = figma;
 const { AutoLayout, Text, useSyncedState } = widget;
 
-export function AgeSlider() {
+interface SliderProps {
+  scale: number;
+}
+
+export function AgeSlider({
+  scale
+}: SliderProps) {
   const [selectedSection, setSelectedSection] = useSyncedState('selectedSection', 0);
 
   const sections = [
@@ -19,18 +25,20 @@ export function AgeSlider() {
       direction={'vertical'}
       horizontalAlignItems={'start'}
       verticalAlignItems={'start'}
-      spacing={8}
+      spacing={8 * scale}
+      width={'hug-contents'}
     >
       <AutoLayout
         direction={'horizontal'}
         padding={{
           horizontal: 0,
-          vertical: 4,
+          vertical: 4 * scale,
         }}
+        width={'hug-contents'}
       >
         <Text
           fontFamily="Inter"
-          fontSize={24}
+          fontSize={24 * scale}
           fontWeight={500}
           horizontalAlignText={'left'}
           fill={'#636366'}
@@ -41,42 +49,31 @@ export function AgeSlider() {
 
     <AutoLayout
       direction="vertical"
-      spacing={8}
+      spacing={8 * scale}
       padding={0}
       width="hug-contents"
       horizontalAlignItems="start"
     >
-      <Text fontFamily="Inter" fontSize={24} fontWeight={500} fill={'#8B8C95'}>
+      <Text fontFamily="Inter" fontSize={24 * scale} fontWeight={500} fill={'#8B8C95'}>
         {sections[selectedSection]}
       </Text>
       
       <AutoLayout
         direction="horizontal"
-        spacing={8}
+        width={648 * scale}
+        spacing={16 * scale}
         padding={0}
         horizontalAlignItems="start"
       >
         {sections.map((section, index) => (
           <AutoLayout
             key={index}
-            width={24}
-            height={24}
-            cornerRadius={12}
+            width={40 * scale}
+            height={40 * scale}
+            cornerRadius={30 * scale}
             fill={index === selectedSection ? "#007AFF" : "#E0E0E0"}
             onClick={() => setSelectedSection(index)}
           />
-        ))}
-      </AutoLayout>
-      
-      <AutoLayout
-        direction="horizontal"
-        spacing={8}
-        horizontalAlignItems="center"
-      >
-        {sections.map((section, index) => (
-          <Text key={index} fontSize={10} width={24} horizontalAlignText="center">
-            {index + 1}
-          </Text>
         ))}
       </AutoLayout>
     </AutoLayout>
