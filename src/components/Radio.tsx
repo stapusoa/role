@@ -1,7 +1,8 @@
 const { widget } = figma;
 const { Frame, SVG, useSyncedState, AutoLayout, Text, Ellipse } = widget;
 
-import { CircleIcon, RadioFillIcon } from "./Icons";
+import { CircleIcon, RadioFillIcon, defaultSVG } from "./Icons";
+import { applyStrokeColorToSVG, applyColorToSVG } from './utils';
 
 interface CircleRadioProps {
   label: string;
@@ -9,9 +10,12 @@ interface CircleRadioProps {
   selectedValue: string;
   onChange: (value: string) => void;
   scale: number;
+  customSVG: string;
+  headerColor: string;
+  setCustomSVG: (value: string) => void;
 }
 
-export function RadioButton({ label, value, selectedValue, scale, onChange }: CircleRadioProps) {
+export function RadioButton({ label, value, selectedValue, scale, onChange, customSVG, headerColor, setCustomSVG }: CircleRadioProps) {
   const isSelected = value === selectedValue;
 
   return (
@@ -28,7 +32,7 @@ export function RadioButton({ label, value, selectedValue, scale, onChange }: Ci
   height={24 * scale}
 >
   <SVG
-    src={CircleIcon({ width: 24 * scale, height: 24 * scale, fill: isSelected ? '#000000' : '#DADADA' })}
+    src={CircleIcon({ width: 24 * scale, height: 24 * scale, fill: isSelected ? headerColor : '#DADADA' })}
     width={24 * scale}
     height={24 * scale}
     x={0}
@@ -36,7 +40,7 @@ export function RadioButton({ label, value, selectedValue, scale, onChange }: Ci
   />
   {isSelected && (
     <SVG
-      src={RadioFillIcon({ width: 12 * scale, height: 12 * scale })}
+      src={RadioFillIcon({ width: 12 * scale, height: 12 * scale, fill: isSelected ? headerColor : '#DADADA' })}
       width={12 * scale}
       height={12 * scale}
       x={(24 * scale - 12 * scale) / 2}
@@ -44,7 +48,7 @@ export function RadioButton({ label, value, selectedValue, scale, onChange }: Ci
     />
   )}
 </Frame>
-      <Text fontSize={16}>{label}</Text>
+      <Text fontFamily="Inter" fontSize={24 * scale } fontWeight={500} fill={'#8B8C95'}>{label}</Text>
     </AutoLayout>
   );
 }

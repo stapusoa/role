@@ -2,13 +2,21 @@ const { widget } = figma;
 const { Frame, SVG, useSyncedState, AutoLayout } = widget;
 
 import { userAmmon, userAna, userBraxton, userCheyenne, userErik, userKaren, userMichael, userTargaryen } from "./Avatar";
+import { applyStrokeColorToSVG, applyColorToSVG } from './utils';
+import { defaultSVG } from './Icons'
 
 interface RadioButtonProps {
-  scale: number
+  scale: number;
+  customSVG: string;
+  headerColor: string;
+  setCustomSVG: (value: string) => void;
 }
 
 export function AvatarRadioButton({
-  scale
+  scale,
+  customSVG,
+  headerColor,
+  setCustomSVG
 }: RadioButtonProps) {
   const avatars = [
     { id: 'ammon', svg: userAmmon },
@@ -33,21 +41,21 @@ export function AvatarRadioButton({
           cornerRadius={8 * scale}
           horizontalAlignItems={'center'}
           verticalAlignItems={'end'}
-          stroke={selectedAvatar === avatar.id ? '#0000FF' : '#DADCE2'}
-          strokeWidth={2 * scale}
+          fill={selectedAvatar === avatar.id ? headerColor : '#FFFFFF'}
+          stroke={selectedAvatar === avatar.id ? headerColor : '#DADCE2'}
+          strokeWidth={selectedAvatar === avatar.id ? 3 * scale : 2 * scale}
           effect={
             selectedAvatar === avatar.id
               ? [
-                  {
-                    type: 'drop-shadow',
-                    color: '#00000026',
-                    offset: { x: 0, y: 4 },
-                    blur: 4,
-                  },
-                ]
+                {
+                  type: 'drop-shadow',
+                  color: '#00000033',
+                  offset: { x: 1 * scale, y: 8 * scale },
+                  blur: 15 * scale,
+                },
+              ]
               : []
           }
-          fill={'#FFFFFF'}
           onClick={() => setSelectedAvatar(avatar.id)}
         >
           <SVG

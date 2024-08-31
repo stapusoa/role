@@ -3,13 +3,16 @@ const { widget } = figma
 const { AutoLayout, Text, SVG, Input } = widget;
 
 interface InputProps {
+  label: string;
   scale: number;
+  value: string;
+  placeholder: string;
+  onChange: (value: string) => void;
 }
 
 export function CustomInput({
-  scale
+  label, scale, value, placeholder, onChange
 }: InputProps) {
-  const [inputValue, setInputValue] = widget.useSyncedState('inputValue', '');
 
   return (
     <AutoLayout
@@ -34,7 +37,7 @@ export function CustomInput({
           horizontalAlignText={'left'}
           fill={'#636366'}
         >
-          User Name
+          {label}
         </Text>
       </AutoLayout>
       <AutoLayout
@@ -47,16 +50,20 @@ export function CustomInput({
         stroke={'#DADCE2'}
         strokeWidth={1 * scale}
         strokeAlign={'inside'}
+        height={61 * scale}
+
       >
         <Input
-          value={inputValue}
-          onTextEditEnd={(e) => setInputValue(e.characters)}
-          placeholder="e.g., Piper"
+          value={value}
+          onTextEditEnd={(e) => onChange(e.characters)}
+          placeholder={placeholder}
           fontFamily="Inter"
           fontSize={24 * scale}
           fontWeight={500}
           fill={'#8B8C95'}
           width={'fill-parent'}
+          height={29 * scale}
+          truncate={true}
         />
       </AutoLayout>
     </AutoLayout>

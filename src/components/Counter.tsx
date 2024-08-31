@@ -2,16 +2,50 @@ const { widget } = figma
 
 const { AutoLayout, Text, SVG, Input } = widget;
 
-import { MinusIcon, PlusIcon } from './Icons'
+import { MinusIcon, PlusIcon, defaultSVG } from './Icons'
+import { applyColorToSVG } from './utils';
 
 interface CounterProps {
   scale: number;
+  label: string;
+  unit: string;
+  min?: number;
+  max?: number;
+  initialValueNum?: number;
+  customSVG: string;
+  buttonColor: string;
+  setCustomSVG: (value: string) => void;
 }
 
 export function Counter({
-  scale
+  scale,
+  label,
+  unit,
+  min = 0,
+  max = Infinity,
+  initialValueNum = 0,
+  customSVG,
+  buttonColor,
+  setCustomSVG
 }: CounterProps) {
-  const [inputValue, setInputValue] = widget.useSyncedState('inputValue', '');
+  const [inputValueNum, setInputValue] = widget.useSyncedState('inputValueNum', initialValueNum.toString());
+
+  const handleIncrement = () => {
+    const newValue = Math.min(parseInt(inputValueNum) + 1, max);
+    setInputValue(newValue.toString());
+  };
+
+  const handleDecrement = () => {
+    const newValue = Math.max(parseInt(inputValueNum) - 1, min);
+    setInputValue(newValue.toString());
+  };
+
+  const handleInputChange = (value: string) => {
+    const numValue = parseInt(value);
+    if (!isNaN(numValue)) {
+      setInputValue(Math.max(min, Math.min(numValue, max)).toString());
+    }
+  };
 
   return (
     <AutoLayout
@@ -36,7 +70,7 @@ export function Counter({
           horizontalAlignText={'left'}
           fill={'#636366'}
         >
-          Age
+          {label}
         </Text>
       </AutoLayout>
       <AutoLayout
@@ -57,12 +91,17 @@ export function Counter({
           verticalAlignItems={'center'}
           width={40 * scale}
           height={40 * scale}
+          onClick={handleDecrement}
         >
-          <MinusIcon width={24 * scale} height={24 * scale} fill="#636366" />
+          <SVG
+            src={applyColorToSVG(MinusIcon({ width: 24 * scale, height: 24 * scale }), buttonColor)}
+            width={24 * scale}
+            height={24 * scale}
+          />
         </AutoLayout>
         <AutoLayout
           direction={'horizontal'}
-          width={'hug-contents'}
+          width={'fill-parent'}
           horizontalAlignItems={'center'}
           verticalAlignItems={'center'}
           padding={{
@@ -70,16 +109,17 @@ export function Counter({
             horizontal: 0
           }}
         >
-        <Input
-          value={inputValue}
-          onTextEditEnd={(e) => setInputValue(e.characters)}
-          placeholder="0 years old"
-          fontFamily="Inter"
-          fontSize={24 * scale}
-          fontWeight={500}
-          fill={'#8B8C95'}
-          horizontalAlignText={'center'}
-        />
+          <Input
+            value={`${inputValueNum} ${unit}`}
+            onTextEditEnd={(e) => handleInputChange(e.characters)}
+            placeholder={`0 ${unit}`}
+            fontFamily="Inter"
+            fontSize={24 * scale}
+            fontWeight={500}
+            fill={'#8B8C95'}
+            horizontalAlignText={'center'}
+            width={'fill-parent'}
+          />
         </AutoLayout>
         <AutoLayout
           direction={'horizontal'}
@@ -87,8 +127,13 @@ export function Counter({
           verticalAlignItems={'center'}
           width={40 * scale}
           height={40 * scale}
+          onClick={handleIncrement}
         >
-          <PlusIcon width={24 * scale} height={24 * scale} fill="#636366" />
+          <SVG
+            src={applyColorToSVG(PlusIcon({ width: 24 * scale, height: 24 * scale }), buttonColor)}
+            width={24 * scale}
+            height={24 * scale}
+          />
         </AutoLayout>
       </AutoLayout>
     </AutoLayout>

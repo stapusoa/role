@@ -1,6 +1,7 @@
 const { widget } = figma
 
 import { defaultSVG } from './Icons';
+import { applyColorToSVG } from './utils';
 
 const { AutoLayout, Text, SVG, Input } = widget;
 
@@ -21,19 +22,6 @@ export function Header({
   setCustomSVG,
   setIsEditing,
 }: HeaderProps) {
-
-  // Function to apply headerColor as a mask to the SVG
-  const applyColorToSVG = (svgString: string, color: string): string => {
-    if (!svgString) {
-      return ''; // Return an empty string if no SVG is provided
-    }
-    try {
-      return svgString.replace(/fill=".*?"/g, `fill="${color}"`);
-    } catch (error) {
-      console.error('Error applying color to SVG:', error);
-      return svgString; // Return the original string if something goes wrong
-    }
-  };
 
   return (
     <AutoLayout
