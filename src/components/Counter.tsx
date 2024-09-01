@@ -2,48 +2,51 @@ const { widget } = figma
 
 const { AutoLayout, Text, SVG, Input } = widget;
 
-import { MinusIcon, PlusIcon, defaultSVG } from './Icons'
+import { MinusIcon, PlusIcon } from './Icons'
 import { applyColorToSVG } from './utils';
 
 interface CounterProps {
   scale: number;
   label: string;
   unit: string;
+  value: string;
   min?: number;
   max?: number;
-  initialValueNum?: number;
+  initialNumber?: number;
   customSVG: string;
   buttonColor: string;
   setCustomSVG: (value: string) => void;
+  onChange: (value: string) => void;
 }
 
 export function Counter({
   scale,
   label,
   unit,
+  value,
   min = 0,
   max = Infinity,
-  initialValueNum = 0,
+  initialNumber = 0,
   customSVG,
   buttonColor,
-  setCustomSVG
+  setCustomSVG,
+  onChange
 }: CounterProps) {
-  const [inputValueNum, setInputValue] = widget.useSyncedState('inputValueNum', initialValueNum.toString());
 
   const handleIncrement = () => {
-    const newValue = Math.min(parseInt(inputValueNum) + 1, max);
-    setInputValue(newValue.toString());
+    const newValue = Math.min(parseInt(value) + 1, max);
+    onChange(newValue.toString()); // Use onChange to update parent state
   };
 
   const handleDecrement = () => {
-    const newValue = Math.max(parseInt(inputValueNum) - 1, min);
-    setInputValue(newValue.toString());
+    const newValue = Math.max(parseInt(value) - 1, min);
+    onChange(newValue.toString()); // Use onChange to update parent state
   };
 
-  const handleInputChange = (value: string) => {
-    const numValue = parseInt(value);
+  const handleInputChange = (newValue: string) => {
+    const numValue = parseInt(newValue);
     if (!isNaN(numValue)) {
-      setInputValue(Math.max(min, Math.min(numValue, max)).toString());
+      onChange(Math.max(min, Math.min(numValue, max)).toString()); // Use onChange to update parent state
     }
   };
 
@@ -110,7 +113,7 @@ export function Counter({
           }}
         >
           <Input
-            value={`${inputValueNum} ${unit}`}
+            value={`${value} ${unit}`} // Use value prop here
             onTextEditEnd={(e) => handleInputChange(e.characters)}
             placeholder={`0 ${unit}`}
             fontFamily="Inter"

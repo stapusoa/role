@@ -1,6 +1,6 @@
 const { widget } = figma
 
-const { AutoLayout, Text, SVG, Input } = widget;
+const { AutoLayout, Text, Input } = widget;
 
 interface InputProps {
   label: string;
@@ -51,11 +51,10 @@ export function CustomInput({
         strokeWidth={1 * scale}
         strokeAlign={'inside'}
         height={61 * scale}
-
       >
         <Input
-          value={value}
-          onTextEditEnd={(e) => onChange(e.characters)}
+          value={value} // Use value prop here
+          onTextEditEnd={(e) => onChange(e.characters)} // Use onChange prop here
           placeholder={placeholder}
           fontFamily="Inter"
           fontSize={24 * scale}
