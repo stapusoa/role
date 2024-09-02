@@ -2,11 +2,12 @@ const { widget } = figma
 const { AutoLayout, Text, SVG, Frame } = widget;
 import { ArrowIcon, GoalIcon, ProblemIcon, NeedsIcon, MotiveIcon } from "../../components/Icons";
 
+
 interface PersonaBlockProps {
   scale: number;
   headerColor: string;
   title: string;
-  // blockIcon: any;
+  blockIcon: string;
   blockDetails: string;
 }
 
@@ -15,13 +16,9 @@ export function PersonaBlock({
   scale,
   headerColor,
   title,
-  // blockIcon,
+  blockIcon,
   blockDetails
 }: PersonaBlockProps) {
-
-
-
-
 
   return (
     <AutoLayout // block
@@ -30,7 +27,7 @@ export function PersonaBlock({
       horizontalAlignItems={'start'}
       verticalAlignItems={'start'}
       overflow={'visible'}
-
+width={347 * scale}
     >
       <AutoLayout // title
         direction={'horizontal'}
@@ -47,7 +44,7 @@ export function PersonaBlock({
           fill={'#F1F5F9'}
           effect={{
             type: "drop-shadow",
-            color:           '#0000001A'            ,
+            color: '#0000001A',
             offset: {
               x: 0,
               y: 10 * scale,
@@ -57,9 +54,13 @@ export function PersonaBlock({
           cornerRadius={8 * scale}
           overflow={'hidden'}
         >
-         {/* {blockIcon && <SVG src={blockIcon} width={32 * scale} height={32 * scale} />} */}
-          </AutoLayout>
-          <Text
+          <SVG 
+            src={blockIcon}
+            width={32 * scale}
+            height={32 * scale}
+          />
+        </AutoLayout>
+        <Text
           fontFamily="Inter"
           fontSize={32 * scale}
           fontWeight={600}
@@ -77,6 +78,6 @@ export function PersonaBlock({
       >
         {blockDetails}
       </Text>
-      </AutoLayout>
+    </AutoLayout>
   )
 }

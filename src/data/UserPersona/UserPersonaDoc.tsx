@@ -6,6 +6,7 @@ import { PersonaBlock } from './personaBlock';
 import { GoalIcon, NeedsIcon, ProblemIcon, MotiveIcon } from '../../components/Icons';
 const { AutoLayout, Text, Rectangle } = widget;
 
+
 interface UserPersonaProps {
   scale: number;
   headerColor: string;
@@ -17,6 +18,8 @@ interface UserPersonaProps {
   education: string;
   industry: string;
   selectedAvatar: string;
+  situation: string;
+  frustrations: string;
 }
 
 export function UserPersonaDoc({
@@ -29,31 +32,12 @@ export function UserPersonaDoc({
   goals,
   education,
   industry,
-  selectedAvatar
+  selectedAvatar,
+  situation,
+  frustrations
 }: UserPersonaProps) {
 
-  const personaBlocks = [
-    {
-      title: 'Goals',
-      icon: GoalIcon,
-      details: goals,
-    },
-    {
-      title: 'Needs',
-      icon: NeedsIcon,
-      details: 'What they need...', // Replace with actual data
-    },
-    {
-      title: 'Concerns',
-      icon: ProblemIcon,
-      details: 'What concerns them...', // Replace with actual data
-    },
-    {
-      title: 'Motivations',
-      icon: MotiveIcon,
-      details: 'What motivates them...', // Replace with actual data
-    }
-  ];
+
 
   return (
     <AutoLayout
@@ -143,35 +127,66 @@ export function UserPersonaDoc({
           education={education}
           avatars={avatars} // Pass avatars array here
         />
-          <AutoLayout // grid
-      direction={'vertical'}
-      spacing={32 * scale}
-      horizontalAlignItems={'start'}
-      verticalAlignItems={'start'}
-      overflow={'visible'}
+        <AutoLayout // grid
+          direction={'vertical'}
+          spacing={32 * scale}
+          horizontalAlignItems={'start'}
+          verticalAlignItems={'start'}
+          overflow={'visible'}
+maxWidth={784 * scale}
+        >
+          <AutoLayout // row
+            direction={'horizontal'}
+            spacing={90 * scale}
+            horizontalAlignItems={'center'}
+            verticalAlignItems={'start'}
+            overflow={'visible'}
+width={'fill-parent'}
+          >
+            
+            <PersonaBlock
+              scale={scale}
+              headerColor={headerColor}
+              title="Goals"
+              blockIcon={GoalIcon}
+              blockDetails={goals}
+            />
+            
+            <PersonaBlock
+              scale={scale}
+              headerColor={headerColor}
+              title="Needs"
+              blockIcon={NeedsIcon}
+              blockDetails={situation}
+            />
+            
+          </AutoLayout>
+          <AutoLayout // row
+            direction={'horizontal'}
+            spacing={90 * scale}
+            horizontalAlignItems={'center'}
+            verticalAlignItems={'start'}
+            overflow={'visible'}
 
-    >
-      <AutoLayout // row
-        direction={'horizontal'}
-        spacing={90 * scale}
-        horizontalAlignItems={'center'}
-        verticalAlignItems={'start'}
-        overflow={'visible'}
-
-      >
-        {personaBlocks.map((block, index) => (
-    <PersonaBlock
-      key={index}
-      scale={scale}
-      headerColor={headerColor}
-      title={block.title}
-     // blockIcon={block.icon}
-      blockDetails={block.details}
-    />
-  ))}
-       
-      </AutoLayout>
-      </AutoLayout>
+          >
+            
+            <PersonaBlock
+              scale={scale}
+              headerColor={headerColor}
+              title="Concerns"
+              blockIcon={ProblemIcon}
+              blockDetails={frustrations}
+            />
+            <PersonaBlock
+              scale={scale}
+              headerColor={headerColor}
+              title="Motivations"
+              blockIcon={MotiveIcon}
+              blockDetails={traits}
+            />
+            
+          </AutoLayout>
+        </AutoLayout>
       </AutoLayout>
     </AutoLayout>
   );

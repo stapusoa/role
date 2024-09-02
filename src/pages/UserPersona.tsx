@@ -564,7 +564,8 @@ export function UserPersona() {
           education={selectedEducation}
           selectedAvatar={selectedAvatar}
           industry={selectedIndustry}
-
+frustrations={frustrations}
+situation={situation}
         />
       )}
     </AutoLayout>
