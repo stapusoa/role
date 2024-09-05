@@ -75,6 +75,7 @@ width={347 * scale}
         fontSize={24 * scale}
         fontWeight={500}
         fill={'#4B5563'}
+        width={'fill-parent'}
       >
         {blockDetails}
       </Text>
